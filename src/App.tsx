@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import JInput from './components/JInput'
+import { Flex, Icon } from '@chakra-ui/react'
+import { MdOutlineEmail, MdLockOutline } from 'react-icons/md'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [formValue, setFormValue] = useState({
+        email: '',
+        password: '',
+    })
+
+    function handleChange(e: any) {
+        setFormValue((prev: any) => {
+            return {
+                ...prev,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    return (
+        <Flex direction='column' width='100%' padding='10px' gap='20px'>
+            <JInput 
+                label='Email'
+                name='email'
+                type='email'
+                placeholder='Type email ...'
+                value={formValue?.email}
+                on_change={handleChange}
+                error_message='Email is required'
+                is_required
+                left_icon={<Icon as={MdOutlineEmail} color='var(--chakra-colors-chakra-border-color)' fontSize='24px' />}
+            />
+
+            <JInput 
+                label='Password'
+                name='password'
+                type='password'
+                placeholder='Type password ...'
+                value={formValue?.password}
+                on_change={handleChange}
+                error_message='Password is required'
+                is_required
+                left_icon={<Icon as={MdLockOutline} color='var(--chakra-colors-chakra-border-color)' fontSize='24px' />}
+            />
+        </Flex>
+        // <Login />
+    )
 }
 
-export default App;
+export default App
